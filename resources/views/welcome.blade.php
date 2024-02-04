@@ -34,7 +34,7 @@
 @section('body_content')
     
 <div>
-    <div class="owl-carousel h-min mt-2">
+    <div class="owl-carousel h-min">
         <a href="#"><img src="{{asset('dpanel/images/banner1.png')}}" alt=""></a>
         <a href="#"><img src="{{asset('dpanel/images/banner2.png')}}" alt=""></a>
         <a href="#"><img src="{{asset('dpanel/images/banner1.png')}}" alt=""></a>
