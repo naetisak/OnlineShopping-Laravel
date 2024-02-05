@@ -33,7 +33,7 @@
     <div class="w-full flex flex-col">
         <div class="overflow-x-auto">
             <div class="align-middle inline-block min-w-full">
-                <div class=" shadow overflow-hidden border border-gray-400 sm:rounded-lg">
+                <div class=" shadow overflow-hidden border border-gray-400">
                     <table class="min-w-full divide-y divide-gray-600">
                         <thead class="bg-gray-800">
                             <tr>

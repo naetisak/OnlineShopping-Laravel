@@ -41,8 +41,10 @@
             isActive="{{ request()->segment(2) == 'category' }}" />
             <x-dpanel::sidebar.item name="Sizes" icon="bx-category" url="{{ route('dpanel.size.index') }}"
             isActive="{{ request()->segment(2) == 'size' }}" />
-            <x-dpanel::sidebar.item name="Colors" icon="bx-category" url="{{ route('dpanel.color.index') }}"
+            <x-dpanel::sidebar.item name="Colors" icon="bx-palette" url="{{ route('dpanel.color.index') }}"
             isActive="{{ request()->segment(2) == 'color' }}" />
+            <x-dpanel::sidebar.item name="Products" icon="bx-shopping-bag" url="{{ route('dpanel.product.index') }}"
+            isActive="{{ request()->segment(2) == 'product' }}" />
             
 
         {{-- <x-dpanel::sidebar.dropdown name="Menu 1" icon="bx-menu" isActive="{{ request()->segment(2) == 'menu-1' }}">
