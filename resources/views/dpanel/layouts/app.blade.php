@@ -8,7 +8,7 @@
 
     <title>@yield('title')</title>
     <link href='https://unpkg.com/boxicons@2.1.2/css/boxicons.min.css' rel='stylesheet'>
-    <link rel="stylesheet" href="{{ asset('dpanel/js/cute-alert/style.css') }}">
+    <link rel="stylesheet" href="{{ asset('dd4you/dpanel/js/cute-alert/style.css') }}">
     @vite('resources/css/app.css')
     @stack('css')
 
@@ -32,10 +32,20 @@
 
     <x-dpanel::sidebar.container name="DD Admin">
 
-        <x-dpanel::sidebar.item name="Dashboard" icon="bx-home" url="{{ route(config('dpanel.prefix') . '.dashboard') }}"
+        <x-dpanel::sidebar.item name="Dashboard" icon="bx-home" url=""
             isActive="{{ request()->segment(2) == 'dashboard' }}" />
+            
+            <x-dpanel::sidebar.item name="Brand" icon="bx-category" url="{{ route('dpanel.brand.index') }}"
+            isActive="{{ request()->segment(2) == 'brand' }}" />
+            <x-dpanel::sidebar.item name="Categories" icon="bx-category" url="{{ route('dpanel.category.index') }}"
+            isActive="{{ request()->segment(2) == 'category' }}" />
+            <x-dpanel::sidebar.item name="Sizes" icon="bx-category" url="{{ route('dpanel.size.index') }}"
+            isActive="{{ request()->segment(2) == 'size' }}" />
+            <x-dpanel::sidebar.item name="Colors" icon="bx-category" url="{{ route('dpanel.color.index') }}"
+            isActive="{{ request()->segment(2) == 'color' }}" />
+            
 
-        <x-dpanel::sidebar.dropdown name="Menu 1" icon="bx-menu" isActive="{{ request()->segment(2) == 'menu-1' }}">
+        {{-- <x-dpanel::sidebar.dropdown name="Menu 1" icon="bx-menu" isActive="{{ request()->segment(2) == 'menu-1' }}">
 
             <x-dpanel::sidebar.dropdown-item name="Submenu 1" url="" isActive="{{ false }}" />
             <x-dpanel::sidebar.dropdown-item name="Submenu 2" url="" isActive="{{ true }}" />
@@ -43,14 +53,13 @@
 
         </x-dpanel::sidebar.dropdown>
 
-        <x-dpanel::sidebar.item name="Menu 2" icon="bx-menu" url=""
-            isActive="{{ request()->segment(2) == 'menu-2' }}" />
+        
         <x-dpanel::sidebar.item name="Menu 3" icon="bx-menu" url=""
             isActive="{{ request()->segment(2) == 'menu-2' }}" />
         <x-dpanel::sidebar.item name="Menu 4" icon="bx-menu" url=""
             isActive="{{ request()->segment(2) == 'menu-2' }}" />
         <x-dpanel::sidebar.item name="Menu 5" icon="bx-menu" url=""
-            isActive="{{ request()->segment(2) == 'menu-2' }}" />
+            isActive="{{ request()->segment(2) == 'menu-2' }}" /> --}}
 
         {{-- Global Settings Menu --}}
         @if (Schema::hasTable('global_settings'))
