@@ -1,14 +1,14 @@
 @extends('dpanel.layouts.app')
 
-@section('title', 'Edit Product')
+@section('title', 'Edit NewProducts')
 
 @push('scripts')
     <script>
     
         
         const addVariant = (e)=>{
-            let colorOptions = '<option value="">Select</option>';
-            let sizeOptions = '<option value="">Select</option>';
+            let colorOptions = '<option value="">select</option>';
+            let sizeOptions = '<option value="">select</option>';
 
             let colors = @json($colors);
             colors.forEach(color =>{
@@ -32,7 +32,7 @@
                             <div>
                                 <label class="text-white">Size</label>
                                 <select name="size_id[]" class="w-full bg-white border border-gray-700 rounded py-0.5 focus:outline-none" required>
-                                    <option value="">Select</option>
+                                    <option value="">select</option>
                                     ${sizeOptions}
                                 </select>
                             </div>
@@ -85,7 +85,8 @@
             r.setAttribute('onchange', 'setImagePreview(this, event, false)');
             r.nextElementSibling.src = URL.createObjectURL(e.target.files[0]);
 
-            let span = `<span onclick="deleteImage(this)" class="absolute top-1 right-1 cursor-pointer w-7 h-7 flex items-center 
+            let span = 
+            `<span onclick="deleteImage(this)" class="absolute top-1 right-1 cursor-pointer w-7 h-7 flex items-center 
                 justify-center bg-white hover:bg-red-500 bg-opacity-25 hover:bg-opacity-100 text-red-500 hover:text-white 
                 duration-300 shadow rounded-full">
                 <i class='bx bx-trash text-xl'></i>
@@ -103,7 +104,7 @@
 
 @section('body_content')
     <div class="bg-gray-800 flex justify-between items-center rounded-l pl-2 mb-3 ">
-        <p class="text-white font-medium text-lg py-1">Edit Product</p>
+        <p class="text-white font-medium text-lg py-1">Edit Products</p>
     </div>
 
     @if ($errors->any())
@@ -126,10 +127,11 @@
             <div class="grid grid-cols-1 md:grid-cols-3 gap-y-2 gap-x-4 ">
                 <div>
                     <label class="text-white">Product Category</label>
-                    <select name="category_id" class="w-full bg-white border border-gray-700 rounded py-0.5 focus:outline-none">
-                        <option value="">Select</option>
+                    <select name="category_id" 
+                        class="w-full bg-white border border-gray-700 rounded py-0.5 focus:outline-none">
+                        <option value="">select</option>
                         @foreach ($categories as $item)
-                            <option value="{{$item->id}}" @selected($data->category_id == $item->id)>{{$item->name}}</option>
+                            <option value="{{$item->id}}" @selected($data->category_id==$item->id)>{{$item->name}}</option>
                         @endforeach
                     </select>
                 </div>
@@ -137,9 +139,9 @@
                 <div>
                     <label class="text-white">Product Brand</label>
                     <select name="brand_id" class="w-full bg-white border border-gray-700 rounded py-0.5 focus:outline-none">
-                        <option value="">Select</option>
+                        <option value="">select</option>
                         @foreach ($brands as $item)
-                            <option value="{{$item->id}}"@selected($data->brand_id == $item->id)>{{$item->name}}</option>
+                            <option value="{{$item->id}}" @selected($data->brand_id==$item->id)>{{$item->name}}</option>
                         @endforeach
                     </select>
                 </div>
@@ -153,7 +155,7 @@
                 <div class="md:col-span-3">
                     <label class="text-white">Product Description</label>
                     <textarea name="description" rows="3" placeholder="Enter Product Description" 
-                        class="w-full bg-white border border-gray-700 rounded py-0.5 px-2 focus:outline-none"></textarea>
+                        class="w-full bg-white border border-gray-700 rounded py-0.5 px-2 focus:outline-none">{{$data->description}}</textarea>
                 </div>
             </div>
         </section>
@@ -163,14 +165,16 @@
         <section id="product_variants" class="bg-slate-600 px-3 pb-3 rounded mb-3">
             <h2 class="mb-1 pt-2 text-lg font-medium text-white">Product Variant Detail</h2>
 
+            @foreach ($data->variant as $variantItem)
+            <input type="hidden" name="variant_ids[]" value="{{$variantItem->id}}">
             <div class="flex justify-between gap-3 mb-2 border-b border-gray-400 pb-2">
                 <div class="grid grid-cols-1 md:grid-cols-5 gap-3">
                     <div>
                         <label class="text-white">Color</label>
                         <select name="color_id[]" class="w-full bg-white border border-gray-700 rounded py-0.5 focus:outline-none required">
-                            <option value="">Select</option>
+                            <option value="">select</option>
                             @foreach ($colors as $item)
-                                <option value="{{$item->id}}">{{$item->name}}</option>
+                                <option value="{{$item->id}}" @selected($item->id==$variantItem->color_id)>{{$item->name}}</option>
                             @endforeach
                         </select>
                     </div>
@@ -178,28 +182,28 @@
                     <div>
                         <label class="text-white">Size</label>
                         <select name="size_id[]" class="w-full bg-white border border-gray-700 rounded py-0.5 focus:outline-none" required>
-                            <option value="">Select</option>
+                            <option value="">select</option>
                             @foreach ($sizes as $item) required
-                                <option value="{{$item->id}}">{{$item->name}}</option>
+                                <option value="{{$item->id}}"@selected($item->id==$variantItem->size_id)>{{$item->name}}</option>
                             @endforeach
                         </select>
                     </div>
 
                     <div>
                         <label class="text-white">MRP / Unit</label>
-                        <input type="number" name="mrp[]" placeholder="Enter MRP" 
+                        <input type="number" name="mrp[]" value="{{$variantItem->mrp}}" placeholder="Enter MRP" 
                             class="w-full bg-white border border-gray-700 rounded py-0.5 px-2 focus:outline-none" required>
                     </div>
 
                     <div>
                         <label class="text-white">Selling Price / Unit</label>
-                        <input type="number" name="selling_price[]" placeholder="Enter Selling Price" 
+                        <input type="number" name="selling_price[]" value="{{$variantItem->selling_price}}" placeholder="Enter Selling Price" 
                             class="w-full bg-white border border-gray-700 rounded py-0.5 px-2 focus:outline-none" required>
                     </div>
 
                     <div>
                         <label class="text-white">Stock</label>
-                        <input type="number" name="stock[]" placeholder="Enter Available Stock" 
+                        <input type="number" name="stock[]" value="{{$variantItem->stock}}" placeholder="Enter Available Stock" 
                             class="w-full bg-white border border-gray-700 rounded py-0.5 px-2 focus:outline-none" required>
                     </div>
 
@@ -208,6 +212,8 @@
                     <button type="button" onclick="addVariant(this)"class="bg-indigo-500 text-center w-16 py-1 rounded text-white">Add</button>
                 </div>
             </div>
+            @endforeach
+            
         </section>
         {{-- End Product Variant Detail --}}
 
@@ -215,6 +221,24 @@
             <section class="bg-slate-600 px-3 pb-3 rounded mb-3">
                 <h2 class="mb-1 pt-2 text-lg font-medium text-white">Product Images (800x1200px ot 2:3)</h2>
                 <div id="image_container" class="grid grid-cols-1 md:grid-cols-8 gap-3">
+
+                    @foreach ($data->image as $item)
+                    <input type="hidden" name="image_ids[]" value="{{$item->id}}">
+                        <div class="relative">
+                            <label for="img-1" 
+                                class="flex items-center justify-center bg-white rounded-md shadow-md p-1 cursor-pointer">
+                                <input type="file" id="img-1" name="images[]" onchange="setImagePreview(this, event)" 
+                                    accept="image/*" class="hidden" required>
+                                <img src="{{asset('storage/' . $item->path)}}" 
+                                    class="rounded-md aspect-[2/3] object-cover" alt="">
+                            </label>
+                            <span onclick="deleteImage(this)" class="absolute top-1 right-1 cursor-pointer w-7 h-7 flex items-center 
+                                justify-center bg-white hover:bg-red-500 bg-opacity-25 hover:bg-opacity-100 text-red-500 hover:text-white 
+                                duration-300 shadow rounded-full">
+                            <i class='bx bx-trash text-xl'></i>
+                            </span>
+                        </div>
+                    @endforeach
 
                     <div class="relative">
                         <label for="img-1" 
@@ -229,7 +253,7 @@
                 </div>
             </section>
         {{-- End Product Image --}} 
-        <button class="bg-indigo-500 text-center text-white font-medium w-full py-1 rounded shadow-md uppercase">Add New Product</button>
+        <button class="bg-indigo-500 text-center text-white font-medium w-full py-1 rounded shadow-md uppercase">Update Product</button>
 
     </form>
 @endsection
