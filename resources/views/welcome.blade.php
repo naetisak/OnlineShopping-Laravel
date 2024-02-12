@@ -1,8 +1,8 @@
 @extends('layouts.app')
 
 @push('css')
-    <link rel="stylesheet" href="{{asset('css/owl.carousel.min.css')}}">
-    <link rel="stylesheet" href="{{asset('css/owl.theme.default.min.css')}}">
+    <link rel="stylesheet" href="{{ asset('css/owl.carousel.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/owl.theme.default.min.css') }}">
 @endpush
 
 @push('scripts')
@@ -47,8 +47,10 @@
 <section class="px-6 md:px-20 mt-6">
     <h3 class="text-gray-800 font-medium mb-2">Flash Sale</h3>
     <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
-        @foreach (range(1,4) as $item)
-        <x-product.card1 />
+        @foreach ($products as $item)
+            @if ($item->variant->isNotEmpty())
+                <x-product.card1 :product="$item" />
+            @endif
         @endforeach
     </div>
 </section>
@@ -72,15 +74,17 @@
 
 <section class="px-6 md:px-20 mt-8">
     <div class="flex items-center justify-between">
-        <div class="flex gap-2 mb-3">
+        <div class="flex gap-2">
             <h3 class="text-gray-800 font-medium underline mb-2">Best Seller</h3>
             <h3 class="text-gray-800 font-medium mb-2">New Product</h3>
         </div>
-        <a href="{{route('products')}}" class="text-violet-600 font-medium mb-2">All Product</a>
+        <a href="{{ route('products') }}" class="text-violet-600 font-medium mb-2">All Product</a>
     </div>
     <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
-        @foreach (range(1,12) as $item)
-            <x-product.card1 />
+        @foreach ($products as $item)
+            @if ($item->variant->isNotEmpty())
+                <x-product.card1 :product="$item" />
+            @endif
         @endforeach
     </div>
 </section>

@@ -8,17 +8,15 @@
 
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.bunny.net">
-        <link href="https://fonts.bunny.net/css?family=figtree:400,600&display=swap" rel="stylesheet" />
+        <link href="https://fonts.bunny.net/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
         <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
-
-
+        <link rel="stylesheet" href="{{ asset('dd4you/dpanel/js/cute-alert/style.css') }}">
         @stack('css')
-
         <!-- Styles -->
         @vite('resources/css/app.css')
     </head>
     <body class="bg-[#FBFBFB]">
-        <div class="flex justify-between items-center px-6 md:px-20 bg-white shadow py-2">
+        <div class="flex justify-between items-center px-6 md:px-20 mt-4 bg-white shadow py-2">
 
             <!-- รูป logo - Header bar -->
             <a href="/"><img style="height:75px" src="{{asset('dpanel/images/logo.png')}}" alt="">

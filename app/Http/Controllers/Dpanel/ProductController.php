@@ -16,34 +16,38 @@ use Illuminate\Support\Str;
 
 class ProductController extends Controller
 {
-    public function index(){
+    public function index()
+    {
         $data = Product::with('brand', 'category')->paginate(10);
+
         return view('dpanel.product.index', compact('data'));
     }
 
-    public function create(){
+    public function create()
+    {
         $brands = Brand::where('is_active', true)->get();
         $categories = Category::where('is_active', true)->get();
         $colors = Color::where('is_active', true)->get();
         $sizes = Size::where('is_active', true)->get();
 
-        return view('dpanel.product.create', compact('brands', 'categories','colors','sizes'));
+        return view('dpanel.product.create', compact('brands', 'categories', 'colors', 'sizes'));
     }
 
-    public function store(Request $request){
-
+    public function store(Request $request)
+    {
         $request->validate([
-            'category_id'=>'required',
-            'brand_id'=>'required',
-            'title'=>'required|max:255|unique:products',
-            'description'=>'required',
-            'color_id'=>'required|array|min:1',
-            'size_id'=>'required|array|min:1',
-            'mrp'=>'required|array|min:1',
-            'selling_price'=>'required|array|min:1',
-            'stock'=>'required|array|min:1',
+            'category_id' => 'required',
+            'brand_id' => 'required',
+            'title' => 'required|max:255|unique:products',
+            'description' => 'required',
+            'color_id' => 'required|array|min:1',
+            'size_id' => 'required|array|min:1',
+            'mrp' => 'required|array|min:1',
+            'selling_price' => 'required|array|min:1',
+            'stock' => 'required|array|min:1',
             'images.*' => 'mimes:jpg,jpeg,png',
         ]);
+
         // Store Product
         $product = new Product;
         $product->brand_id = $request->brand_id;
@@ -56,7 +60,7 @@ class ProductController extends Controller
         // Store Variant
         $colors = $request->color_id;
         foreach ($colors as $key => $color_id) {
-            $product_id = $product->id;
+            $product_id  = $product->id;
             $size_id = $request->size_id[$key];
             $sku = 'FKP' . $product_id . 'C' . $color_id . 'S' . $size_id; # FKP1C1S1 where P=Product, C=Color and S=Size
 
@@ -72,6 +76,7 @@ class ProductController extends Controller
         }
 
         #Store Images
+
         foreach ($request->images as $image) {
             $productImage = new ProductImage;
             $productImage->product_id = $product->id;
@@ -79,38 +84,38 @@ class ProductController extends Controller
             $productImage->save();
         }
 
-        return redirect()->route('dpanel.product.index')->withSuccess('Product Added Successfully');
+        return redirect()->route('dpanel.product.index')->withSuccess('Product Added Successfully.');
     }
 
-    public function edit($id){
-
+    public function edit($id)
+    {
         $data = Product::with('variant', 'image')->find($id);
 
-        abort_if(!$data,404);
+        abort_if(!$data, 404);
 
         $brands = Brand::where('is_active', true)->get();
         $categories = Category::where('is_active', true)->get();
         $colors = Color::where('is_active', true)->get();
         $sizes = Size::where('is_active', true)->get();
-        
 
-        return view('dpanel.product.edit', compact('brands', 'categories','colors','sizes','data'));
+        return view('dpanel.product.edit', compact('brands', 'categories', 'colors', 'sizes', 'data'));
     }
 
-    public function update(Request $request ,$id){
-
+    public function update(Request $request, $id)
+    {
         $request->validate([
-            'category_id'=>'required',
-            'brand_id'=>'required',
-            'title'=>'required|max:255|unique:products,title,'. $id,
-            'description'=>'required',
-            'color_id'=>'required|array|min:1',
-            'size_id'=>'required|array|min:1',
-            'mrp'=>'required|array|min:1',
-            'selling_price'=>'required|array|min:1',
-            'stock'=>'required|array|min:1',
+            'category_id' => 'required',
+            'brand_id' => 'required',
+            'title' => 'required|max:255|unique:products,title,' . $id,
+            'description' => 'required',
+            'color_id' => 'required|array|min:1',
+            'size_id' => 'required|array|min:1',
+            'mrp' => 'required|array|min:1',
+            'selling_price' => 'required|array|min:1',
+            'stock' => 'required|array|min:1',
             'images.*' => 'nullable|mimes:jpg,jpeg,png',
         ]);
+
         // Store Product
         $product = Product::find($id);
         $product->brand_id = $request->brand_id;
@@ -123,13 +128,13 @@ class ProductController extends Controller
         // Store Variant
         $colors = $request->color_id;
         foreach ($colors as $key => $color_id) {
-            $product_id = $product->id;
+            $product_id  = $product->id;
             $size_id = $request->size_id[$key];
             $sku = 'FKP' . $product_id . 'C' . $color_id . 'S' . $size_id; # FKP1C1S1 where P=Product, C=Color and S=Size
 
-            if(isset($request->variant_ids[$key])){
-                $variant = Variant::find($request->variant_ids[$key]);
-            }else{
+            if (isset($request->variant_ids[$key])) {
+                $variant =  Variant::find($request->variant_ids[$key]);
+            } else {
                 $variant = new Variant;
             }
             $variant->sku = $sku;
@@ -143,26 +148,23 @@ class ProductController extends Controller
         }
 
         #Store Images
-        foreach ($request->images as $key => $image) {
 
-            if(isset($request->image_ids[$key])){
-                $productImage = ProductImage::find($request->image_ids[$key]);
-                Storage::disk('public')->delete($productImage->path);
-                $productImage->path = $image->store('media', 'public');
-                $productImage->save();
+        if ($request->images) {
+            foreach ($request->images as $key => $image) {
 
-            }else{
-                $productImage = new ProductImage;
-                $productImage->product_id = $product->id;
-                $productImage->path = $image->store('media', 'public');
-               $productImage->save();
+                if (isset($request->image_ids[$key])) {
+                    $productImage =  ProductImage::find($request->image_ids[$key]);
+                    Storage::disk('public')->delete($productImage->path);
+                    $productImage->path = $image->store('media', 'public');
+                    $productImage->save();
+                } else {
+                    $productImage = new ProductImage;
+                    $productImage->product_id = $product->id;
+                    $productImage->path = $image->store('media', 'public');
+                    $productImage->save();
+                }
             }
-            
         }
-
-        return redirect()->route('dpanel.product.index')->withSuccess('Product Updated Successfully');
+        return redirect()->route('dpanel.product.index')->withSuccess('Product Updated Successfully.');
     }
-
 }
-
-

@@ -1,25 +1,28 @@
-<a href="{{route('product_detail')}}" class="bg-white rounded-lg shadow-lg p-3 relative">
-    <img src="{{asset('dpanel/images/product-1.png')}}" alt="">
+<div class="bg-white rounded-lg shadow-lg p-3 relative">
+    <a href="{{ route('product_detail', $product->slug) }}">
+        <img class="mx-auto" src="{{ asset('storage/' . $product->image[0]->path) }}" alt="">
+    </a>
 
     <div class="flex justify-between gap-3 my-3">
-        <p class="text-lg font-medium text-gray-800">Mens Casual Slim Fit T-Shirts</p>
+        <a class="font-medium text-gray-800">{{ $product->title }}</a>
         <div class="flex flex-col items-end">
-            <strong class="text-violet-700">500$</strong>
-            <strike class="text-gray-400">599$</strike>
+            <strong class="text-violet-600">${{ $product->variant[0]->selling_price }}</strong>
+            <strike class="text-gray-400">$ {{ $product->variant[0]->mrp }}</strike>
         </div>
     </div>
 
     <div class="flex justify-between items-center mb-2">
         <div class="flex gap-1">
-            <span style="background-color:#9b9a9a" class="w-5 h-5 rounded-full">&nbsp;</span>
-            <span style="background-color:#ff00dd" class="w-5 h-5 rounded-full">&nbsp;</span>
-            <span style="background-color:#003cff" class="w-5 h-5 rounded-full">&nbsp;</span>
+            @foreach ($product->variant as $item)
+                <span style="background-color: {{ $item->color->code }}" class="w-5 h-5 rounded-full">&nbsp;</span>
+            @endforeach
         </div>
 
         <div class="flex gap-1 text-gray-400 text-sm">
-            <span style="background-color:#ebebeb9d" class="flex justify-center items-center w-5 h-5 rounded-full border-gray-400">S</span>
-            <span style="background-color:#ebebeb9d" class="flex justify-center items-center w-5 h-5 rounded-full border-gray-400">M</span>
-            <span style="background-color:#ebebeb9d" class="flex justify-center items-center w-5 h-5 rounded-full border-gray-400">L</span>
+            @foreach ($product->variant as $item)
+                <span
+                    class="flex justify-center items-center w-5 h-5 rounded-full border border-gray-400">{{ $item->size->code }}</span>
+            @endforeach
         </div>
     </div>
 

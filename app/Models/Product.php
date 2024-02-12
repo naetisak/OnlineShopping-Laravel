@@ -17,19 +17,21 @@ class Product extends Model
         'category_id'
     ];
 
-    public function brand(){
+    public function brand()
+    {
         return $this->belongsTo(Brand::class);
     }
-
-    public function category(){
+    public function category()
+    {
         return $this->belongsTo(Category::class);
     }
 
-    public function variant(): HasMany{
+    public function variant(): HasMany
+    {
         return $this->hasMany(Variant::class);
     }
-
-    public function image(): HasMany{
+    public function image(): HasMany
+    {
         return $this->hasMany(ProductImage::class);
     }
 }
