@@ -19,7 +19,15 @@ Route::controller(HomeController::class)->group(function(){
     Route::get('/pd/{slug}', 'productDetail')->name('product_detail');
 });
 
-Route::view('/pd/slug','product_detail')->name('product_detail');
+Route::controller(App\Http\Controllers\AuthController::class)->group(function(){
+    Route::get('/logout', 'logout')->name('logout');
+    Route::post('/login', 'login')->name('login');
+    Route::post('/register', 'register')->name('register');
+    Route::post('/forgot', 'forgot')->name('forgot');
+    Route::match(['GET','POST'],'/reset', 'reset')->name('reset');
+});
+
+// Route::view('/pd/slug','product_detail')->name('product_detail');
 Route::view('/products','products')->name('products');
 Route::view('/cart','cart')->name('cart');
 Route::view('/wishlist','wishlist')->name('wishlist');

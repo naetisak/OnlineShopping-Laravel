@@ -22,7 +22,8 @@ class User extends Authenticatable
      */
     protected $fillable = [
         'avatar',
-        'name',
+        'first_name',
+        'last_name',
         'email',
         'password',
         'role',
@@ -48,4 +49,9 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'role' => UserRole::class,
     ];
+    
+    public function getFullNameAttribute()
+    {
+        return $this->first_name . " " . $this->last_name;
+    }
 }
