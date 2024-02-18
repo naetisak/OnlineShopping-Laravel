@@ -24,11 +24,16 @@ Route::controller(App\Http\Controllers\AuthController::class)->group(function(){
     Route::post('/login', 'login')->name('login');
     Route::post('/register', 'register')->name('register');
     Route::post('/forgot', 'forgot')->name('forgot');
-    Route::match(['GET','POST'],'/reset', 'reset')->name('reset');
+    Route::match(['GET','POST'],'/update-password', 'updatePassword')->name('update-password');
+});
+
+Route::controller(App\Http\Controllers\AccountController::class)->group(function(){
+    Route::get('account/', 'index')->name('account.index');
+    Route::post('account/', 'index')->name('account.index');
 });
 
 // Route::view('/pd/slug','product_detail')->name('product_detail');
+// Route::view('/account','account')->name('account');
 Route::view('/products','products')->name('products');
 Route::view('/cart','cart')->name('cart');
 Route::view('/wishlist','wishlist')->name('wishlist');
-Route::view('/account','account')->name('account');

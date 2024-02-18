@@ -26,7 +26,7 @@
             <div class="text-2xl relative">
                 <a href="{{route('wishlist')}}"><i class='bx bx-heart' ></i></a>
                 @auth
-                    <a href="{{route('account')}}"><i class='bx bx-user' ></i></a>
+                    <a href="{{route('account.index')}}"><i class='bx bx-user' ></i></a>
                 @else
                     <button type="button" onclick="toggleLoginPopup()"><i class='bx bx-user' ></i></button>
                 @endauth
@@ -155,7 +155,35 @@
 
         @vite('resources/js/app.js')
         <script src="{{asset('js/jquery-3.7.1.min.js')}}"></script>
+        <script src="{{ asset('dd4you/dpanel/js/cute-alert/cute-alert.js') }}"></script>
         <script>
+            @if (Session::has('success'))
+            cuteToast({
+                type: "success",
+                message: "{{ session('success') }}",
+            })
+            @endif
+
+            @if (Session::has('error'))
+                cuteToast({
+                    type: "error",
+                    message: "{{ session('error') }}",
+                })
+            @endif
+
+            @if (Session::has('info'))
+                cuteToast({
+                    type: "info",
+                    message: "{{ session('info') }}",
+                })
+            @endif
+
+            @if (Session::has('warning'))
+                cuteToast({
+                    type: "warning",
+                    message: "{{ session('warning') }}",
+                })
+            @endif
             const toggleForms = (id) =>{
                 let loginForm = document.getElementById('login');
                 let registerForm = document.getElementById('register');
@@ -171,7 +199,6 @@
             }
 
             const toggleLoginPopup = () =>document.getElementById('login-popup').classList.toggle('hidden');
-
 
             const login = async () =>{
                 const form = document.getElementById('login');

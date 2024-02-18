@@ -80,7 +80,7 @@ class AuthController extends Controller
             $token = Str::random(64);
             $user->remember_token = $token;
             $user->save();
-            $link = route('reset', ['token' => $token]);
+            $link = route('update-password', ['token' => $token]);
             Mail::to($request->email)->send(new ForgotPassword($link));
 
             return response()->json(['msg' => 'Reset Email Send Successfully.'], 200);
@@ -89,7 +89,7 @@ class AuthController extends Controller
         return response()->json(['msg' => 'The provided email do not match our records'], 401);
     }
 
-    public function reset(Request $request){
+    public function updatePassword(Request $request){
 
         if($request->method() == "GET") return view('reset_password');
 
@@ -97,7 +97,7 @@ class AuthController extends Controller
             'token'=>'required',
             'password'=>'required|confirmed'
         ]);
-        
+
         $user = User::where('remember_token',$request->token)->first();
         if($user){
             $user->remember_token = null;

@@ -50,26 +50,27 @@
                 <section id="profile" class="tabContent border border-slate-300 rounded px-4 pt-2 pb-4">
                     <h3 class="text-gray-900">Personal Information</h3>
                     <hr class="mb-4">
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <form action="" method="POST" class="grid grid-cols-1 md:grid-cols-2 gap-4">
     
-                        <div class="relative border border-slate-300 rounded">
+                        @csrf
+                        <div class="mt-4 relative border border-slate-300 rounded">
                             <label for="" class="absolute -top-3.5 left-3 bg-gray-50 px-1 text-gray-400">First Name</label>
-                            <input type="text" name="" value="Naetisak" class="mt-2 px-3 bg-transparent focus:outline-none w-full">
+                            <input type="text" name="first_name" value="{{auth()->user()->first_name}}" class="mt-2 px-3 bg-transparent focus:outline-none w-full">
                         </div>
     
                         <div class="mt-4 relative border border-slate-300 rounded">
                             <label for="" class="absolute -top-3.5 left-3 bg-gray-50 px-1 text-gray-400">Last Name</label>
-                            <input type="text" name="" value="Phinyoyotshopon" class="mt-2 px-3 bg-transparent focus:outline-none w-full">
+                            <input type="text" name="last_name" value="{{auth()->user()->last_name}}" class="mt-2 px-3 bg-transparent focus:outline-none w-full">
                         </div>
     
                         <div class="mt-4 relative border border-slate-300 rounded">
                             <label for="" class="absolute -top-3.5 left-3 bg-gray-50 px-1 text-gray-400">Mobile Number</label>
-                            <input type="text" name="" value="0648037075" class="mt-2 px-3 bg-transparent focus:outline-none w-full">
+                            <input type="tel" maxlength="10" name="mobile" value="{{auth()->user()->mobile}}" class="mt-2 px-3 bg-transparent focus:outline-none w-full">
                         </div>
     
                         <div class="mt-4 relative border border-slate-300 rounded">
                             <label for="" class="absolute -top-3.5 left-3 bg-gray-50 px-1 text-gray-400">Email Address</label>
-                            <input type="text" name="" value="naetisak@gmail.com" class="mt-2 px-3 bg-transparent focus:outline-none w-full">
+                            <input type="text" name="email" value="{{auth()->user()->email}}" class="mt-2 px-3 bg-transparent focus:outline-none w-full">
                         </div>
     
                         <div></div>
@@ -77,7 +78,7 @@
                             <button class="bg-violet-500 rounded shadow-lg py-1 text-center w-full text-white uppercase font-medium">Update</button>
                         </div>
     
-                    </div>
+                    </form>
                 </section>
                 {{-- End My Profile --}}
     
