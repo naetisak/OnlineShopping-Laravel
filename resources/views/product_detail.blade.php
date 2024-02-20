@@ -27,6 +27,41 @@
 
             document.getElementById('bigImage').src = arr[currentImage];
         }
+
+        const addToCart = () => {
+            let count = '{{ $product->variant->count() }}';
+            if (count != 1) {
+                cuteToast({
+                    type: 'info',
+                    message: 'Please select color & size'
+                })
+                return;
+            }
+
+            let variantId = '{{ $product->variant[0]->id }}';
+            if (!mCart.isInCart(variantId)) {
+                mCart.add(variantId, 1);
+                cuteToast({
+                    type: 'success',
+                    message: 'Added In Cart'
+                })
+            }
+
+            document.getElementById('add_to_cart_btn').innerHTML = 'Added In Cart';
+            return true;
+        }
+        
+        const buyNow = () => {
+            if (addToCart()) {
+                window.location.href = "{{ route('cart') }}";
+            }
+        }
+
+        @if ($product->variant->count() == 1)
+            let variantId = '{{ $product->variant[0]->id }}';
+
+            if (mCart.isInCart(variantId)) document.getElementById('add_to_cart_btn').innerHTML = 'Added In Cart';
+        @endif
     </script>
 @endpush
 
@@ -66,9 +101,9 @@
             <div class="w-ful flex flex-col gap-4">
                 <div class="flex gap-3">
                     @php
-                        $discount = (($product->variant[0]->mrp - $product->variant[0]->selling_price) / $product->variant[0]->mrp)*100;
+                        $discount = (($product->variant[0]->mrp - $product->variant[0]->selling_price) / $product->variant[0]->mrp) * 100;
                     @endphp
-                    <span class="bg-red-500 text-white rounded px-2 ">{{round($discount,2)}}% Off</span>
+                    <span class="bg-red-500 text-white rounded px-2 text-xs">{{ round($discount, 2) }}% Off</span>
                     <span class="text-amber-500 text-sm"><i class='bx bx-star'></i> 4.5</span>
                 </div>
                 {{-- Name, SKU, Brand --}}
@@ -126,12 +161,12 @@
                     <span class="bg-white shadow-md rounded-full w-8 h-8 flex items-center justify-center">
                         <i class='bx bx-heart text-2xl text-gray-500' ></i>
                     </span>
-                    <button class="border border-violet-600 rounded w-28 text-center drop-shadow font-medium text-violet-600 py-0.5">
-                        Add to Cart
-                    </button>
-                    <button class="border border-violet-600 rounded w-28 text-center drop-shadow font-medium text-white bg-violet-600 py-0.5">
-                        Buy Now
-                    </button>
+                    <button onclick="addToCart()" id="add_to_cart_btn"
+                        class="border border-violet-600 rounded w-28 text-center drop-shadow font-medium text-violet-600 py-0.5">Add
+                        to Cart</button>
+                    <button onclick="buyNow()"
+                        class="border border-violet-600 rounded w-28 text-center drop-shadow font-medium text-white bg-violet-600 py-0.5">Buy
+                        Now</button>
                 </div>
                 {{-- End Add Cart and Buy Now --}}
                 

@@ -6,7 +6,7 @@
     <script>
     
         
-        const addVariant = (e)=>{
+        const addVariant = (e, addRemoveButton = true)=>{
             let colorOptions = '<option value="">select</option>';
             let sizeOptions = '<option value="">select</option>';
 
@@ -60,8 +60,13 @@
                     <button type="button" onclick="addVariant(this)"class="bg-indigo-500 text-center w-16 py-1 rounded text-white">Add</button>
                 </div>
             </div>`;
-            e.parentElement.innerHTML = 
-            `<button type="button" onclick="removeVariant(this)"class="bg-red-500 text-center w-16 py-1 rounded text-white">Remove</button>`;
+            if(addRemoveButton){
+                e.parentElement.innerHTML = 
+                `<button type="button" onclick="removeVariant(this)"class="bg-red-500 text-center w-16 py-1 rounded text-white">Remove</button>`;
+            }else{
+                e.parentElement.parentElement.remove();
+            }
+            
 
             document.getElementById('product_variants').lastElementChild.insertAdjacentHTML('afterend',html);
         }
@@ -209,10 +214,18 @@
 
                 </div>
                 <div class="flex items-end">
-                    <button type="button" onclick="addVariant(this)"class="bg-indigo-500 text-center w-16 py-1 rounded text-white">Add</button>
+                    <button type="button" onclick="removeVariant(this)"
+                    class="bg-red-500 text-center w-16 py-1 rounded text-white">Remove</button>
                 </div>
             </div>
             @endforeach
+
+            <div class="flex justify-between gap-3 mb-2 border-b border-gray-400 pb-2">
+                <div class="grid grid-cols-1 md:grid-cols-5 gap-3"></div>
+                <div class="flex items-end">
+                    <button type="button" onclick="addVariant(this ,false)"
+                    class="bg-indigo-500 text-center w-16 py-1 rounded text-white">Add</button>
+                </div>
             
         </section>
         {{-- End Product Variant Detail --}}
