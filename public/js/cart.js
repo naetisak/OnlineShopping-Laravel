@@ -43,9 +43,10 @@ class ManageCart{
             })
             return;
         }
-        if(newQty == 0){
-            this.add(product_variant_id,qty);
-        } 
+        if(newQty == 0) return;
+
+        this.add(product_variant_id, qty);
+         
     }
 
     isInCart(product_variant_id){

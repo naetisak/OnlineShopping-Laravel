@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::controller(HomeController::class)->group(function(){
+Route::controller(\App\Http\Controllers\HomeController::class)->group(function(){
     Route::get('/', 'index')->name('landing-page');
     Route::get('/pd/{slug}', 'productDetail')->name('product_detail');
     Route::get('/products', 'products')->name('products');
@@ -40,8 +40,13 @@ Route::controller(App\Http\Controllers\AccountController::class)->group(function
     Route::post('account/', 'index')->name('account.index');
 });
 
+Route::controller(\App\Http\Controllers\CartController::class)->group(function(){
+    Route::get('/cart', 'index')->name('cart');
+    Route::get('/cart/products', 'apiCartProducts');
+});
+
 // Route::view('/pd/slug','product_detail')->name('product_detail');
 // Route::view('/account','account')->name('account');
 // Route::view('/products','products')->name('products');
-Route::view('/cart','cart')->name('cart');
+// Route::view('/cart','cart')->name('cart');
 Route::view('/wishlist','wishlist')->name('wishlist');
