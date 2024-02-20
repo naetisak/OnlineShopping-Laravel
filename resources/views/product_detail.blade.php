@@ -1,31 +1,47 @@
 @extends('layouts.app')
 
 @push('scripts')
+    <x-url-generator-js />
     <script>
         let currentImage = 0;
+        let color_id = '{{ request()->c ?? null }}';
+        let size_id = '{{ request()->s ?? null }}';
+
+        const selectColor = (cid) => {
+            c = color_id ? null : cid;
+            window.location.href = generateUrl({
+                c
+            })
+        }
+        const selectSize = (sid) => {
+            s = size_id ? null : sid;
+            window.location.href = generateUrl({
+                s
+            })
+        }
 
         const viewImage = (e, index) => {
 
-            currentImage = index;
+        currentImage = index;
 
-            document.getElementById('bigImage').src = e.querySelector('img').src;
+        document.getElementById('bigImage').src = e.querySelector('img').src;
         }
 
         const nextPrevious = (index) => {
 
-            i = currentImage + index;
+        i = currentImage + index;
 
-            let images = document.getElementById('images').querySelectorAll('img');
+        let images = document.getElementById('images').querySelectorAll('img');
 
-            if(i >= images.length || i < 0 ) return;
+        if (i >= images.length || i < 0) return;
 
-            currentImage = i;
+        currentImage = i;
 
-            let arr = [];
+        let arr = [];
 
-            images.forEach(element =>arr.push(element.src));
+        images.forEach(element => arr.push(element.src));
 
-            document.getElementById('bigImage').src = arr[currentImage];
+        document.getElementById('bigImage').src = arr[currentImage];
         }
 
         const addToCart = () => {
@@ -48,9 +64,10 @@
             }
 
             document.getElementById('add_to_cart_btn').innerHTML = 'Added In Cart';
+            cartCount();
             return true;
         }
-        
+
         const buyNow = () => {
             if (addToCart()) {
                 window.location.href = "{{ route('cart') }}";
@@ -125,7 +142,9 @@
                     <p class="text-gray-400">Colors:</p>
                     <div class="flex gap-1">
                         @foreach ($product->variant as $item)
-                        <span style="background-color: {{ $item->color->code }}" class="w-5 h-5 rounded-full">&nbsp;</span>
+                            <span onclick="selectColor('{{ $item->color->id }}')"
+                                style="background-color: {{ $item->color->code }}"
+                                class="w-5 h-5 cursor-pointer rounded-full">&nbsp;</span>
                         @endforeach
                     </div>
                 </div>
@@ -136,8 +155,8 @@
                     <p class="text-gray-400">Sizes:</p>
                     <div class="flex gap-1 text-gray-400 text-sm">
                         @foreach ($product->variant as $item)
-                        <span
-                         class="flex justify-center items-center w-5 h-5 rounded-full border border-gray-400">{{ $item->size->code }}</span>
+                            <span onclick="selectSize('{{ $item->size->id }}')"
+                                class="flex justify-center cursor-pointer items-center w-5 h-5 rounded-full border border-gray-400">{{ $item->size->code }}</span>
                         @endforeach
                     </div>
                     <a href="#" class="text-gray-400 text-xs">Size Guide</a>
