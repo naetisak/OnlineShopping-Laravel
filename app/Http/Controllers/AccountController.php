@@ -11,14 +11,16 @@ use Illuminate\Http\Request;
 
 class AccountController extends Controller
 {
-    public function index(Request $request){
-        if($request->method() == 'POST'){
+    public function index(Request $request)
+    {
+        if ($request->method() == 'POST') {
             $request->validate([
                 'first_name' => 'required|max:25',
                 'last_name' => 'required|max:25',
                 'email' => 'required|email',
                 'mobile' => 'required|max:10',
             ]);
+
             $user = User::find(auth()->user()->id);
             $user->first_name = $request->first_name;
             $user->last_name = $request->last_name;
@@ -26,11 +28,37 @@ class AccountController extends Controller
             $user->mobile = $request->mobile;
             $user->save();
 
-            return back()->withSuccess('Update Successfully');
+            return back()->withSuccess('Update Successfully.');
         }
 
-        $addresses = UserAddress::where('user_id', auth()->user()->id)->get();
-        return view('account',compact('addresses'));
+        $orders = [];
+        $addresses = [];
+        if (auth()->check()) {
+            $user_id = auth()->user()->id;
+
+            $addresses =  UserAddress::where('user_id', $user_id)->get();
+
+            $orders = Order::query()
+                ->with('items:order_id,variant_id')
+                ->where('user_id', $user_id)
+                ->get();
+        }
+
+        foreach ($orders as $k => $order) {
+            $variant_ids = array_column($order->items->toArray(), 'variant_id');
+
+            $products = Product::whereIn(
+                'id',
+                fn ($q) => $q->select('product_id')->from('variants')->whereIn('id', $variant_ids)
+            )
+                ->with('oldestImage')
+                ->get();
+
+            $images = array_column($products->toArray(), 'oldest_image');
+            $orders[$k]['images'] = array_column($images, 'path');
+        }
+
+        return view('account', compact('orders', 'addresses'));
     }
 
     // Address ============================================================================
@@ -38,6 +66,8 @@ class AccountController extends Controller
     public function newAddress(Request $request){
 
         if($request->method()=='GET') return view('new_address');
+
+        abort_if(!auth()->check(), 404);
 
         $request->validate([
             'is_default_address' => 'required',
@@ -74,9 +104,11 @@ class AccountController extends Controller
 
     public function editAddress(Request $request, $id){
         if($request->method()=='GET'){
-            $data = UserAddress::find($id);
+            $data = auth()->check()? UserAddress::find($id) : [];
             return view('edit_address' , compact('data'));
         }
+
+        abort_if(!auth()->check(), 404);
 
         $request->validate([
             'is_default_address' => 'required',

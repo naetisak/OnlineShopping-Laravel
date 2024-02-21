@@ -43,8 +43,11 @@
             isActive="{{ request()->segment(2) == 'size' }}" />
             <x-dpanel::sidebar.item name="Colors" icon="bx-palette" url="{{ route('dpanel.color.index') }}"
             isActive="{{ request()->segment(2) == 'color' }}" />
+
             <x-dpanel::sidebar.item name="Products" icon="bx-shopping-bag" url="{{ route('dpanel.product.index') }}"
             isActive="{{ request()->segment(2) == 'product' }}" />
+            <x-dpanel::sidebar.item name="Coupons" icon="bxs-discount" url="{{ route('dpanel.coupon.index') }}"
+            isActive="{{ request()->segment(2) == 'coupon' }}" />
             
 
         {{-- <x-dpanel::sidebar.dropdown name="Menu 1" icon="bx-menu" isActive="{{ request()->segment(2) == 'menu-1' }}">
@@ -82,7 +85,7 @@
 
     <script src="{{ asset('dd4you/dpanel/js/dd4you.js') }}"></script>
     <script src="{{ asset('dd4you/dpanel/js/cute-alert/cute-alert.js') }}"></script>
-    <script src="{{ asset('dd4you/dpanel/js/jquery-3.6.1.min.js') }}"></script>
+    <script src="{{ asset('dd4you/dpanel/js/jquery-3.7.1.min.js') }}"></script>
     @stack('scripts')
     <script>
         @if (Session::has('success'))
