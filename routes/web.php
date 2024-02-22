@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\HomeController;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -55,9 +56,3 @@ Route::controller(\App\Http\Controllers\WishlistController::class)->group(functi
     Route::get('/wishlist', 'index')->name('wishlist');
     Route::post('/wishlist/{id}', 'toggle');
 });
-
-// Route::view('/pd/slug','product_detail')->name('product_detail');
-// Route::view('/account','account')->name('account');
-// Route::view('/products','products')->name('products');
-// Route::view('/cart','cart')->name('cart');
-// Route::view('/wishlist','wishlist')->name('wishlist');
