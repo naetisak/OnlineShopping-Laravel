@@ -32,22 +32,37 @@
 
     <x-dpanel::sidebar.container name="DD Admin">
 
-        <x-dpanel::sidebar.item name="Dashboard" icon="bx-home" url=""
-            isActive="{{ request()->segment(2) == 'dashboard' }}" />
+        <x-dpanel::sidebar.item name="Dashboard" icon="bx-home"
+        url="{{ route(config('dpanel.prefix') . '.dashboard') }}"
+        isActive="{{ request()->segment(2) == 'dashboard' }}" />
             
-            <x-dpanel::sidebar.item name="Brand" icon="bx-category" url="{{ route('dpanel.brand.index') }}"
+            <x-dpanel::sidebar.item name="Brand" icon="bx-category" 
+            url="{{ route('dpanel.brand.index') }}"
             isActive="{{ request()->segment(2) == 'brand' }}" />
-            <x-dpanel::sidebar.item name="Categories" icon="bx-category" url="{{ route('dpanel.category.index') }}"
+
+            <x-dpanel::sidebar.item name="Categories" icon="bx-category"
+             url="{{ route('dpanel.category.index') }}"
             isActive="{{ request()->segment(2) == 'category' }}" />
-            <x-dpanel::sidebar.item name="Sizes" icon="bx-category" url="{{ route('dpanel.size.index') }}"
+
+            <x-dpanel::sidebar.item name="Sizes" icon="bx-category" 
+            url="{{ route('dpanel.size.index') }}"
             isActive="{{ request()->segment(2) == 'size' }}" />
-            <x-dpanel::sidebar.item name="Colors" icon="bx-palette" url="{{ route('dpanel.color.index') }}"
+
+            <x-dpanel::sidebar.item name="Colors" icon="bx-palette" 
+            url="{{ route('dpanel.color.index') }}"
             isActive="{{ request()->segment(2) == 'color' }}" />
 
-            <x-dpanel::sidebar.item name="Products" icon="bx-shopping-bag" url="{{ route('dpanel.product.index') }}"
+            <x-dpanel::sidebar.item name="Products" icon="bx-shopping-bag" 
+            url="{{ route('dpanel.product.index') }}"
             isActive="{{ request()->segment(2) == 'product' }}" />
-            <x-dpanel::sidebar.item name="Coupons" icon="bxs-discount" url="{{ route('dpanel.coupon.index') }}"
+
+            <x-dpanel::sidebar.item name="Coupons" icon="bxs-discount" 
+            url="{{ route('dpanel.coupon.index') }}"
             isActive="{{ request()->segment(2) == 'coupon' }}" />
+
+            <x-dpanel::sidebar.item name="Orders" icon="bxs-discount" 
+            url="{{ route('dpanel.order.index') }}"
+            isActive="{{ request()->segment(2) == 'order' }}" />
             
 
         {{-- <x-dpanel::sidebar.dropdown name="Menu 1" icon="bx-menu" isActive="{{ request()->segment(2) == 'menu-1' }}">

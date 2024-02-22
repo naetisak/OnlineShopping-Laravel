@@ -2,10 +2,9 @@
     <a href="{{ route('product_detail', $product->slug) }}">
         <img class="mx-auto" src="{{ asset('storage/' . $product->image[0]->path) }}" alt="">
     </a>
-
+    
     <div class="flex justify-between gap-3 my-3">
-        <a href="{{ route('product_detail', $product->slug) }}"
-            class="font-medium text-gray-800">{{ $product->title }}</a>
+        <a class="font-medium text-gray-800">{{ $product->title }}</a>
         <div class="flex flex-col items-end">
             <strong class="text-violet-600">${{ $product->variant[0]->selling_price }}</strong>
             <strike class="text-gray-400">$ {{ $product->variant[0]->mrp }}</strike>
@@ -35,12 +34,11 @@
 
     <div class="absolute top-2 left-3 right-3 flex justify-between items-center">
         @php
-            $discount = round((($product->variant[0]->mrp - $product->variant[0]->selling_price) / $product->variant[0]->mrp) * 100, 2);
+            $discount = round((($product->variant[0]->mrp - $product->variant[0]->selling_price) / $product->variant[0]->mrp) * 100, 2); 
         @endphp
-        <span class="bg-red-500 text-white rounded px-2 text-xs">{{ $discount }}% Off</span>
-        <button onclick="toggleWishlist(this, '{{ $product->id }}')"
-            class="bg-white shadow-md rounded-full w-7 h-7 flex items-center justify-center">
-            <i class='bx  {{ $product->has_favorited ? 'bxs-heart text-red-500' : 'bx-heart' }} text-xl'></i>
-        </button>
+        <span class="bg-red-500 text-white rounded px-2 ">{{$discount}}% Off</span>
+        <span class="bg-white shadow-md rounded-full w-7 h-7 flex items-center justify-center"><i 
+            class='bx bx-heart text-xl' ></i>
+        </span>
     </div>
 </div>

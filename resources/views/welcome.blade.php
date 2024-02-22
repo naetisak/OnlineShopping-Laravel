@@ -28,24 +28,24 @@
                 }
             });
         });
-        $(document).ready(function(){
+        $(document).ready(function() {
             $(".coupon-carousel").owlCarousel({
-                loop:true,
-                margin:10,
-                nav:false,
-                dots:false,
-                autoplay:true,
-                autoplayTimeout:2000,
-                autoplayHoverPause:true,
-                responsiveClass:true,
-                responsive:{
-                    0:{
+                loop: {{ $coupons->count() <= 7 ? 0 : 1 }},
+                margin: 10,
+                nav: false,
+                dots: false,
+                autoplay: true,
+                autoplayTimeout: 2000,
+                autoplayHoverPause: true,
+                responsiveClass: false,
+                responsive: {
+                    0: {
                         items: 1,
                     },
-                    600:{
+                    600: {
                         items: 1,
                     },
-                    1000:{
+                    1000: {
                         items: 7,
                     }
                 }
@@ -83,11 +83,11 @@
                 <div class="bg-white rounded-md shadow mb-2 flex justify-between items-center gap-3">
                     <div class="flex flex-col pl-3 py-1">
                         <span class="text-gray-400 leading-5">New Coupon</span>
-                        <span class="text-orange-500">#{{$item->code}}</span>
+                        <strong class="text-orange-500">#{{ $item->code }}</strong>
                     </div>
 
-                    <div class="bg-violet-600 w-12 font-medium text-white p-3 rounded-r-md">
-                        @if($item->type=='Percentage')
+                    <div class="bg-violet-600 w-14 font-medium text-white p-3 rounded-r-md">
+                        @if ($item->type == 'Percentage')
                             {{$item->value}}% Off
                         @else
                             ${{$item->value}} Off
