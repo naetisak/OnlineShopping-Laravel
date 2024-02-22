@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Color;
 use App\Models\Product;
 use App\Models\Size;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -21,6 +22,11 @@ class HomeController extends Controller
         ->withCount('image')
         ->havingRaw('image_count > 0')
         ->latest()->limit(12)->get();
+
+        if(auth()->check()){
+            $user = User::find(auth()->user()->id);
+            $posts = $user->attachFavoriteStatus($products);
+        }
 
         // return $products;
         return view('welcome', compact('products'));
@@ -104,6 +110,11 @@ class HomeController extends Controller
         }
 
         $products = $query->paginate(16);
+
+        if(auth()->check()){
+            $user = User::find(auth()->user()->id);
+            $posts = $user->attachFavoriteStatus($products);
+        }
 
         # Get colors than the product is available in
         $colors = Color::whereIn(

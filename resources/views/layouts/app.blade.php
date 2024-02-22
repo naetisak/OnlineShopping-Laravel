@@ -18,19 +18,18 @@
     
     <body class="bg-[#FBFBFB]">
         <div class="flex justify-between items-center px-6 md:px-20 mt-4 bg-white shadow py-2">
-
             <!-- รูป logo - Header bar -->
-            <a href="/"><img style="height:75px" src="{{asset('dpanel/images/logo.png')}}" alt="">
+            <a href="/"><img style="height:75px" src="{{asset('images/logo.png')}}" alt="">
             </a>
             
             <div class="text-2xl relative">
-                <a href="{{route('wishlist')}}"><i class='bx bx-heart' ></i></a>
+                <a href="{{ route('wishlist') }}"><i class='bx bx-heart'></i></a>
                 @auth
-                    <a href="{{route('account.index')}}"><i class='bx bx-user' ></i></a>
+                    <a href="{{ route('account.index') }}"><i class='bx bx-user'></i></a>
                 @else
-                    <button type="button" onclick="toggleLoginPopup()"><i class='bx bx-user' ></i></button>
+                    <button type="button" onclick="toggleLoginPopup()"><i class='bx bx-user'></i></button>
                 @endauth
-                <a href="{{route('cart')}}"><i class='bx bx-cart-add' ></i></a>
+                <a href="{{ route('cart') }}"><i class='bx bx-cart'></i></a>
                 <span id="cart_count_badge"
                     class="absolute top-0 -right-2.5 bg-indigo-600 rounded-full w-4 h-4 text-xs text-white text-center">0</span>
             </div>
@@ -185,7 +184,8 @@
                     message: "{{ session('warning') }}",
                 })
             @endif
-            const toggleForms = (id) =>{
+
+            const toggleForms = (id) => {
                 let loginForm = document.getElementById('login');
                 let registerForm = document.getElementById('register');
                 let forgotForm = document.getElementById('forgot');
@@ -195,35 +195,36 @@
                 forgotForm.classList.add('hidden');
 
                 document.getElementById(id).classList.remove('hidden')
-                
+
                 document.getElementById('form-title').innerHTML = id;
+
             }
 
-            const toggleLoginPopup = () =>document.getElementById('login-popup').classList.toggle('hidden');
+            const toggleLoginPopup = () => document.getElementById('login-popup').classList.toggle('hidden');
 
-            const login = async () =>{
+            const login = async () => {
                 const form = document.getElementById('login');
                 const formData = new FormData(form);
 
                 let isError = false;
 
-                for (const [key,value] of formData){
+                for (const [key, value] of formData) {
                     if (value.length == 0 || value == '') isError = true;
                 }
 
-                if (isError){
+                if (isError) {
                     alert('Fill required fields');
                     return;
                 }
 
-                try{
+                try {
                     let response = await axios.post('/login', formData);
-                    if(response.status == 200 ){
+                    if (response.status == 200) {
                         window.location.reload();
-                    }else{
+                    } else {
                         alert(response.data.msg);
                     }
-                }catch (error) {
+                } catch (error) {
                     alert(error.response.data.msg);
                 }
             }
@@ -284,13 +285,39 @@
                 }
             }
 
-            const cartCount = ()=>{
+            const cartCount = () => {
                 let cartItems = mCart._getItems();
-                if (cartItems != null){
-                    document.getElementById('cart_count_badge').textContent = Object.keys(cartItems).length;
+                if (cartItems != null) {
+                document.getElementById('cart_count_badge').textContent = Object.keys(cartItems).length;
                 }
             }
             cartCount();
+
+            const toggleWishlist = (e, id, reload = false) => {
+                axios.post(`${window.location.origin}/wishlist/${id}`)
+                    .then((res) => {
+                        if (res.data.type == 'ADDED') {
+                            e.innerHTML = `<i class='bx bxs-heart text-xl text-red-500'></i>`
+                        } else {
+                            e.innerHTML = `<i class='bx bx-heart text-xl'></i>`
+                        }
+
+                        cuteToast({
+                            type: "success",
+                            message: res.data.msg,
+                        })
+
+                        if (reload) {
+                            window.location.reload();
+                        }
+                    })
+                    .catch((error) => {
+                        cuteToast({
+                            type: "error",
+                            message: error.message,
+                        })
+                    });
+            }
 
         </script>
 

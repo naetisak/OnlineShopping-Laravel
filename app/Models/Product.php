@@ -6,10 +6,14 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Overtrue\LaravelFavorite\Traits\Favoriteable;
+
+
 
 class Product extends Model
 {
-    use HasFactory;
+    use HasFactory, Favoriteable;
+    
     protected $fillable = [
         'title',
         'slug',
@@ -39,5 +43,10 @@ class Product extends Model
     public function oldestImage(): HasOne
     {
         return $this->hasOne(ProductImage::class)->oldestOfMany();
+    }
+
+    public function latestVariant(): HasOne
+    {
+        return $this->hasOne(Variant::class)->latestOfMany();
     }
 }

@@ -51,8 +51,13 @@ Route::controller(\App\Http\Controllers\CartController::class)->group(function (
     Route::post('/payment/verify/{id}', 'paymentVerify');
 });
 
+Route::controller(\App\Http\Controllers\WishlistController::class)->group(function () {
+    Route::get('/wishlist', 'index')->name('wishlist');
+    Route::post('/wishlist/{id}', 'toggle');
+});
+
 // Route::view('/pd/slug','product_detail')->name('product_detail');
 // Route::view('/account','account')->name('account');
 // Route::view('/products','products')->name('products');
 // Route::view('/cart','cart')->name('cart');
-Route::view('/wishlist','wishlist')->name('wishlist');
+// Route::view('/wishlist','wishlist')->name('wishlist');

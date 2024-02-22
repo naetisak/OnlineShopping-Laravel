@@ -39,7 +39,7 @@
                     if (coupon.min_cart_amount != '' && coupon.min_cart_amount > subtotal) {
                         cuteToast({
                             type: "error",
-                            message: `Coupon Active above to ₹${coupon.min_cart_amount} Cart amount`,
+                            message: `Coupon Active above to $${coupon.min_cart_amount} Cart amount`,
                         })
                         return;
                     }
@@ -89,7 +89,7 @@
                                             <p>Size:  ${item.size.code}</p>
                                         </div>
                                         <p class="text-black text-lg">
-                                            ₹<span class="itemPrice">${item.selling_price}</span>x <span class="qty">${qty}</span> = <span class="font-bold">₹<span class="itemTotalPrice">${item.selling_price*qty}</span></span>
+                                            $<span class="itemPrice">${item.selling_price}</span>x <span class="qty">${qty}</span> = <span class="font-bold">$<span class="itemTotalPrice">${item.selling_price*qty}</span></span>
                                         </p>
                                         <div class="flex items-center gap-6">
                                             <div class="flex items-center justify-center gap-1">
@@ -277,27 +277,27 @@
 
                     <div class="flex justify-between items-center">
                         <span class="text-gray-400">Subtotal</span>
-                        <span class="text-gray-800 font-bold">₹<span id="subtotal">0</span></span>
+                        <span class="text-gray-800 font-bold">$<span id="subtotal">0</span></span>
                     </div>
 
                     <div class="flex justify-between items-center">
                         <span class="text-gray-400">Shipping cost</span>
-                        <span class="text-gray-800 font-bold">₹0</span>
+                        <span class="text-gray-800 font-bold">$0</span>
                     </div>
 
                     <div class="mb-2 flex justify-between items-center">
                         <span class="text-gray-400">Discount</span>
-                        <span class="text-violet-600 font-bold">₹<span id="discount_amount">0</span></span>
+                        <span class="text-violet-600 font-bold">$<span id="discount_amount">0</span></span>
                     </div>
 
                     <div class="mb-1 flex justify-between items-center">
                         <span class="text-gray-400">Total</span>
-                        <span class="text-gray-800 font-bold">₹<span id="total">0</span></span>
+                        <span class="text-gray-800 font-bold">$<span id="total">0</span></span>
                     </div>
 
                     <div class="flex justify-between items-center bg-green-100 px-2 py-1 rounded-md">
                         <span class="text-green-500">Your total Savings amount on <br> this order</span>
-                        <span class="text-green-500 font-bold">₹<span id="discount_msg">0</span></span>
+                        <span class="text-green-500 font-bold">$<span id="discount_msg">0</span></span>
                     </div>
 
                     @auth

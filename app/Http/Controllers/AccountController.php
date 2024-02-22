@@ -145,4 +145,22 @@ class AccountController extends Controller
         UserAddress::where('user_id', auth()->user()->id)->where('id','!=',$address_id)->update(['is_default_address'=>false]);
     }
     // Address End ========================================================================
+
+    // Order ========================================================================
+    public function showOrder($id){
+
+        $order = Order::with([
+            'items.variant.color:id,code',
+            'items.variant.size:id,code',
+            'items.variant.product:id,title',
+            'items.variant.product:id,oldestImage',
+        ])
+
+        ->where('user_id', auth()->user()->id)
+        ->where('id', $id)
+        ->first();
+
+        return view('show_order', compact('order'));
+    }
+    // ShowOrder ========================================================================
 }

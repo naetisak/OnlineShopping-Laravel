@@ -94,7 +94,7 @@
                     {{-- My Profile End --}}
 
                     {{-- My Orders --}}
-                    <section id="orders" class="tabContent hidden border border-slate-300 rounded px-4 pt-2 pb-4">
+                    <section id="orders" class="tabContent hidden bg-gray-100 border border-slate-300 rounded px-4 pt-2 pb-4">
                         <h3 class="text-gray-900">My Orders</h3>
                         <hr class="mb-3">
 
@@ -128,11 +128,12 @@
 
                                             <div class="flex flex-col text-gray-800 leading-5">
                                                 <span class="font-medium">Status</span>
-                                                <span class="text-green-500">{{$order->status}}</span>
+                                                <span
+                                                    class="{{ str_replace(' ', '_', strtolower($order->status)) }}">{{ $order->status }}</span>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="shrink-0 flex flex-col gap-1">
+                                    <div class="shrink-0 bg-white flex flex-col gap-1">
                                         <a href="{{ route('order.show', $order->id) }}"
                                             class="border  border-slate-400 rounded-sm text-black font-medium uppercase px-4">View
                                             Order</a>
@@ -170,7 +171,7 @@
                                             Edit</a>
                                     </div>
                                     <p class="text-gray-400 leading-5">{{ $item->full_address }}</p>
-                                    <p class="text-gray-600">Mobile No: +91 {{ $item->mobile_no }}</p>
+                                    <p class="text-gray-600">Mobile No: +66 {{ $item->mobile_no }}</p>
                                 </div>
                             @endforeach
 

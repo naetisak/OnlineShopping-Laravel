@@ -188,14 +188,14 @@
                         <x-product.card1 :product="$item" />
                     @endif
                 @empty
-                <div class="md:col-span-3 flex flex-col justify-center items-center gap-3">
-                    <img src="{{asset('images/result-not-found.png')}}" alt="">
-                    <h1 class="text-2xl font-bold text-gray-800">Result Not Found!</h1>
-                    <p class="text-gray-400">Try to search with another query</p>
-                </div>
+                    <div class="md:col-span-3 flex flex-col justify-center items-center gap-3">
+                        <img src="{{ asset('images/result-not-found.png') }}" alt="">
+                        <h1 class="text-2xl font-bold text-gray-800">Result Not Found!</h1>
+                        <p class="text-gray-400">Try to search with another query.</p>
+                    </div>
                 @endforelse
                 <div class="md:col-span-3">
-                    {{$products->links()}}
+                    {{ $products->links() }}
                 </div>
             </div>
         </section>
