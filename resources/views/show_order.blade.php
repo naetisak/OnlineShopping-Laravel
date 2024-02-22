@@ -61,28 +61,26 @@
                         @foreach ($order->items as $item)
                         <div class="flex gap-4">
                             <div class="bg-gray-100 rounded shadow p-2">
-                                <img class="w-20" src="${'/storage/'+item.product.oldest_image.path}" alt="">
+                                <img class="w-20" src="{{asset('storage/'. $item->variant->product->oldestImage->path)}}" alt="">
                             </div>
                             <div class="flex flex-col gap-0.5">
-                                <h3 class="text-lg font-medium text-gray-800">${item.product.title}</h3>
+                                <h3 class="text-lg font-medium text-gray-800">{{$item->variant->product->title}}</h3>
                                 <div class="text-gray-400 text-sm flex items-center gap-2">
                                     <p class="flex items-center gap-1">
                                         Color:
-                                        <span style="background-color: ${item.color.code}" class="w-4 h-4 rounded-full">&nbsp;</span>
+                                        <span style="background-color: {{$item->variant->color->code}}" class="w-4 h-4 rounded-full">&nbsp;</span>
                                     </p>
-                                    <p>Size:  ${item.size.code}</p>
+                                    <p>Size:  {{$item->variant->size->code}}</p>
                                 </div>
-                                <p class="text-black text-lg">
-                                    $<span class="itemPrice">${item.selling_price}</span>x <span class="qty">${qty}</span> = <span class="font-bold">$<span class="itemTotalPrice">${item.selling_price*qty}</span></span>
+                                <p class="text-gray-400">
+                                    Quantity: <span class="text-gray-800">{{$item->qty}}</span>
                                 </p>
-                                <div class="flex items-center gap-6">
-                                    <div class="flex items-center justify-center gap-1">
-                                        <i onClick="mCart.manageQty(this,'${item.id}', -1, '${item.stock}')" class='text-gray-400 bx bx-minus-circle text-xl cursor-pointer'></i>
-                                        <span class="border border-gray-400 px-3 leading-none">${qty}</span>
-                                        <i onClick="mCart.manageQty(this,'${item.id}', 1, '${item.stock}')" class='text-green-400 bx bx-plus-circle text-xl cursor-pointer'></i>
-                                    </div>
-                                    <button onClick="removeItem(this, '${item.id}')" class="text-gray-400 uppercase">Remove</button>
-                                </div>
+                                <p class="text-gray-400">
+                                    Price: $<span class="text-gray-800">{{$item->price}}</span>
+                                </p>
+                                <p class="text-gray-400">
+                                    Total Price: $<span class="text-gray-800">{{$item->price * $item->qty}}</span>
+                                </p>
                             </div>
                         </div>     
                         @endforeach

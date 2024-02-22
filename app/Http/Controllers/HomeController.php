@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\Color;
+use App\Models\Coupon;
 use App\Models\Product;
 use App\Models\Size;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -28,8 +30,14 @@ class HomeController extends Controller
             $posts = $user->attachFavoriteStatus($products);
         }
 
+        $coupons = Coupon::whereDate('from_valid', '<=', Carbon::now())
+            ->where(function ($q) {
+                $q->whereDate('till_valid', '>=', Carbon::now())
+                    ->orWhereNull('till_valid');
+            })->get();
+
         // return $products;
-        return view('welcome', compact('products'));
+        return view('welcome', compact('products','coupons'));
     }
 
     public function productDetail(Request $request, $slug){

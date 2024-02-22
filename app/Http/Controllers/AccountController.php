@@ -149,16 +149,20 @@ class AccountController extends Controller
     // Order ========================================================================
     public function showOrder($id){
 
-        $order = Order::with([
-            'items.variant.color:id,code',
-            'items.variant.size:id,code',
-            'items.variant.product:id,title',
-            'items.variant.product:id,oldestImage',
-        ])
+        $order = [];
 
-        ->where('user_id', auth()->user()->id)
-        ->where('id', $id)
-        ->first();
+        if(auth()->check()){
+            $order = Order::with([
+                'items.variant.color:id,code',
+                'items.variant.size:id,code',
+                'items.variant.product:id,title',
+                'items.variant.product:id,oldestImage',
+            ])
+    
+            ->where('user_id', auth()->user()->id)
+            ->where('id', $id)
+            ->first();
+        }
 
         return view('show_order', compact('order'));
     }
