@@ -4,10 +4,9 @@
 
 @push('scripts')
     <script>
-
-const updateStatus = (e, id) =>{
+        const updateStatus = (e, id) =>{
             window.location.href = `${window.location.origin}/dpanel/order/status/${id}/${e.value}`;
-        }
+            }
     </script>
 @endpush
 

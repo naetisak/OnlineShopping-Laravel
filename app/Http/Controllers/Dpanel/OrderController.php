@@ -33,8 +33,9 @@ class OrderController extends Controller
             return view('dpanel.order', compact('order'));
     }
 
-    public function updataStatus($id, $status){
-        Order::find($id)->update(['status'=>$status]);
+    public function updateStatus($id, $status)
+    {
+        Order::find($id)->update(['status' => $status]);
 
         return back()->withSuccess('Status change successfully');
     }

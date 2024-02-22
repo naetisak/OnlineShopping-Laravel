@@ -36,6 +36,10 @@
             url="{{ route('dpanel.dashboard') }}"
             isActive="{{ request()->segment(2) == 'dashboard' }}" />
             
+            <x-dpanel::sidebar.item name="Banner" icon="bx-bookmark" 
+            url="{{ route('dpanel.banner.index') }}"
+            isActive="{{ request()->segment(2) == 'banner' }}" />
+            
             <x-dpanel::sidebar.item name="Brand" icon="bx-category" 
             url="{{ route('dpanel.brand.index') }}"
             isActive="{{ request()->segment(2) == 'brand' }}" />

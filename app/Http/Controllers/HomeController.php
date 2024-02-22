@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Banner;
 use App\Models\Color;
 use App\Models\Coupon;
 use App\Models\Product;
@@ -36,8 +37,9 @@ class HomeController extends Controller
                     ->orWhereNull('till_valid');
             })->get();
 
-        // return $products;
-        return view('welcome', compact('products','coupons'));
+            $banners = Banner::active()->InRandomOrder()->limit(5)->get();
+
+        return view('welcome', compact('products','coupons','banners'));
     }
 
     public function productDetail(Request $request, $slug){
@@ -136,6 +138,8 @@ class HomeController extends Controller
             fn ($q) => $q->select('size_id')->from('variants')->distinct()->get()
         )->get(['id', 'name', 'code']);
 
-        return view('products', compact('products', 'colors', 'sizes'));
+        $banners = Banner::active()->InRandomOrder()->limit(5)->get();
+
+        return view('products', compact('products', 'colors', 'sizes','banners'));
     }
 }

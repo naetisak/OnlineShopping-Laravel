@@ -72,11 +72,9 @@
 
     <div>
         <div class="owl-carousel h-min">
-            <a href="#"><img src="{{asset('dpanel/images/banner1.png')}}" alt=""></a>
-            <a href="#"><img src="{{asset('dpanel/images/banner2.png')}}" alt=""></a>
-            <a href="#"><img src="{{asset('dpanel/images/banner1.png')}}" alt=""></a>
-            <a href="#"><img src="{{asset('dpanel/images/banner2.png')}}" alt=""></a>
-            <a href="#"><img src="{{asset('dpanel/images/banner1.png')}}" alt=""></a>
+            @foreach ($banners as $banner)
+            <a href="{{ $banner->link ?? '#' }}"><img src="{{asset('storage/' . $banner->path)}}" alt=""></a>   
+            @endforeach
         </div>
     </div>
 
