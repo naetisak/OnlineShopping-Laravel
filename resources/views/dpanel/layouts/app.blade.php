@@ -32,9 +32,9 @@
 
     <x-dpanel::sidebar.container name="DD Admin">
 
-        <x-dpanel::sidebar.item name="Dashboard" icon="bx-home"
-        url="{{ route(config('dpanel.prefix') . '.dashboard') }}"
-        isActive="{{ request()->segment(2) == 'dashboard' }}" />
+            <x-dpanel::sidebar.item name="Dashboard" icon="bx-home" 
+            url="{{ route('dpanel.dashboard') }}"
+            isActive="{{ request()->segment(2) == 'dashboard' }}" />
             
             <x-dpanel::sidebar.item name="Brand" icon="bx-category" 
             url="{{ route('dpanel.brand.index') }}"

@@ -13,4 +13,8 @@ class Category extends Model
         'slug',
         'is_active'
     ];
+
+    public function scopeActive($query){
+        $query->where('is_active',1);
+    }
 }

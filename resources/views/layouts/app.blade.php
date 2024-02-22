@@ -128,23 +128,18 @@
 
                 <div>
                     <h2 class="text-lg font-medium text-gray-800">Categories</h2>
-                    <ul class="mt-1 text-gray-800">
-                        <li>Category 1</li>
-                        <li>Category 2</li>
-                        <li>Category 3</li>
-                        <li>Category 4</li>
-                        <li>Category 5</li>
-                    </ul>
+                    <x-latest-category />
+                    
                 </div>
 
                 <div>
-                    <h2 class="text-lg font-medium text-gray-800">Further</h2>
+                    <h2 class="text-lg font-medium text-gray-800">Further Info</h2>
                     <ul class="mt-1 text-gray-800">
-                        <li>Home</li>
-                        <li>About Us</li>
-                        <li>Contact Us</li>
-                        <li>Privacy Policy</li>
-                        <li>Terms Of Use</li>
+                        <li><a href="{{route('landing-page')}}">Home</a></li>
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="#">Contact Us</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Terms Of Use</a></li>
                     </ul>
                 </div>
             </div>
